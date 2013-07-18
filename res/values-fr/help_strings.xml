@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+<string name="help_text">
+ <![CDATA[
+<p><u><em>R&egrave;gles du Jeu&nbsp;</em></u></p>
+<p>
+<ul>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8226\t<strong>D&eacute;termination du premier joueur</strong></br>
+</ul>
+<div>Le joueur qui commence est celui qui poss&egrave;de le domino le plus fort.</div>
+<div>Un domino A est plus fort qu\'un domino B si l\'une de ces conditions est respectée : </div>
+<div>\t-\tA est un double, et B n\'en est pas un</div>
+<div>\t-\tLe nombre de points dessin&eacute;s sur A est plus grand que le nombre de points dessin&eacute;s sur B</div>
+<div> \t-\tA et B ont le m&ecirc;me nombre de points et que A a sur l\'une de ses deux faces un nombre de points sup&eacute;rieur au nombre de points de chacune des deux faces de B</div>
+<div></div>
+<div> Si l\'adversaire poss&egrave;de le domino le plus fort des deux joueurs, il joueura immediatement. Sinon, ce sera &agrave; vous de commencer.</div>
+<div> Afin de respecter cette r&egrave;gle, il est impossible de piocher lorsque c\'est &agrave; vous de commencer.</div>
+<div></div>
+<div>
+<ul>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8226;\t<strong>Fonctionnement du jeu</strong></br>
+</ul>
+<div>\t-\tLe but du jeu est de ne plus avoir de dominos dans sa main. Pour cela, il faut poser, chacun son tour, un domino soit &agrave; droite, soit &agrave; gauche du <span style="white-space: pre;"> </span>plateau, sous certaine conditions. Par exemple, pour pouvoir poser un domino A &agrave; l\'extr&eacute;mit&eacute; droite du plateau, il faut que l\'une des deux faces de A <span style="white-space: pre;"> </span>coincide &agrave; la face droite du domino pr&eacute;sent &agrave; cet extr&eacute;mit&eacute;.</div>
+<div></div>
+<div>\t-\tLe jeu est termin&eacute; lorsqu\'un l\'un des deux joueurs ne poss&egrave;de plus de dominos</div>
+</div>
+<div></div>
+<div>\t-\tSi le joueur est dans l\'incapacit&eacute; de jouer, il peut piocher un domino (s\'il en reste dans la pioche) et passer son tour</div>
+<div></div>
+<div><em>Interface Utilisateur</span></em></div>
+<div></div>
+<div>Pour poser un domino sur le plateau, il est necessaire d\'utiliser la m&eacute;thode du <em>drag and drop</em>&nbsp;. Appuyer sur l\'un des dominos de votre main (pr&eacute;sente en bas de l\'&eacute;cran). Puis, tout en restant appuyer sur ce domino, glisser le vers l\'extr&eacute;mit&eacute; du plateau vers lequel vous voulez d&eacute;poser votre domino. Lorsqu\'un domino est selectionn&eacute;, deux rectangles apparaissent vous indiquant o&ugrave; le domino peut &ecirc;tre d&eacute;pos&eacute;. Cependant, les rectangles ne garantissent pas la validit&eacute; de votre coups. En effet, si le domino selectionn&eacute; ne peut &ecirc;tre pos&eacute; sur le plateau suivant les r&egrave;gles du jeu d&eacute;finies pr&eacute;cedemment, le domino une fois lach&eacute; reviendra &agrave; sa position initiale. Les rectangles n\'indiquent que la zone dans laquelle un domino pourrait &eacute;vantuellement &ecirc;tre pos&eacute;.</div>
+<div></div>
+<div>Si l\'utilisateur ne peut jouer aucun domino de sa main, il doit piocher, ce qui fera passer son tour. S\'il n\'y a plus de dominos dans la pioche, le joueur passera alors son tour sans avoir pioch&eacute; (mais il est tout de m&ecirc;me necessaire de cliquer sur le bouton "piocher")</div>
+</p>
+ ]]>
+ </string>
+</resources>

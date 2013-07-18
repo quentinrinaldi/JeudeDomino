@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.myfirstapp.domino"
+      android:versionCode="6"
+      android:versionName="2.2"
+      >
+      <uses-sdk 
+          android:minSdkVersion="7" />
+      <supports-screens android:anyDensity="true" />
+    
+    <application android:label="@string/app_name" 
+                 android:icon="@drawable/ic_launcher" 
+                 android:name="DominoApplication"
+                 android:allowBackup="true"  
+                 
+                  >
+        <activity android:name="MenuActivity"
+                  android:label="@string/app_name"
+                  android:configChanges="orientation|keyboardHidden|keyboard"
+                 > 
+                    <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            </activity>
+            
+        <activity android:name="MainActivity"
+                  android:label="@string/app_name"
+                  android:configChanges="keyboardHidden|orientation"/>
+        <activity android:name="PreferenceAct"
+                  android:label="@string/app_name"
+                  />
+        <activity android:name="HelpActivity"
+                  android:label="@string/app_name"
+                  />
+        
+    </application>
+</manifest>

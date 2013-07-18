@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string-array name="colorentries">
+        <item name="Blanc" >Blanc</item>
+        <item name="Noir">Noir</item>
+    </string-array>
+    <string-array name="colorvalues">
+        <item name="Blanc">0</item>
+        <item name="Noir">1</item>
+    </string-array>
+    
+    
+    <string-array name="backgroundentries">
+        <item name="Vert" >Vert</item>
+        <item name="Violet">Violet</item>
+        <item name="Noir">Noir</item>
+        <item name="Bleu">Bleu</item>
+        <item name="Rouge">Rouge</item>
+    </string-array>
+    <string-array name="backgroundvalues">
+        <item name="Vert">0</item>
+        <item name="Violet">1</item>
+        <item name="Noir">2</item>
+        <item name="Bleu">3</item>
+        <item name="Rouge">4</item>
+    </string-array>
+    
+    <string-array name="diffentries">
+        <item name="Facile" >Facile</item>
+        <item name="Difficile">Difficile</item>
+    </string-array>
+    <string-array name="diffvalues">
+        <item name="Facile">0</item>
+        <item name="Difficile">1</item>
+    </string-array>
+</resources>

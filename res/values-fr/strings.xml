@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Domino</string>
+    
+    <!-- Layout String -->
+    
+    <string name="infoString">Informations à venir</string>
+
+    <!--  Boutons -->
+    <string name="quit">Quitter</string>
+    <string name="newGame">Nouvelle Partie</string>
+    <string name="menu">Menu</string>
+    <string name="drawButton">Piocher</string>
+    <string name="settingsButton">Options</string>
+    <string name="resume">Reprendre</string>
+    <string name="helpButton">Aide</string>
+    
+    <!-- -->
+    <string name="firstPlayerWarning">Vous êtes le premier joueur !</string>    
+    
+    <!-- Alertes fin de jeu -->
+    <string name="wonTitle">Bravo!</string>
+    <string name="wonMessage">Vous avez gagné!</string>
+    
+    <string name="lostTitle">Dommage</string>
+    <string name="lostMessage">Vous avez perdu!</string>
+    
+    <string name="endDrawTitle">Dommage</string>
+    <string name="endDrawMessage">Match nul!</string>
+    
+    <!-- Status bar -->
+    <string name="remaining">Dominos restant: </string> 
+    <string name="opponent">Adverseraire: </string>
+    <string name="stock">Pioche: </string>
+    
+    <string name="htmlHelp">file:///android_asset/help-string-fr.html</string>
+    
+ <!-- Settings menu -->
+        <string name="ColorTilesTitle">Couleur des dominos</string>
+        <string name="ColorTilesText">Définir la couleur d\'affichage des dominos</string>
+        <string name="ColorBoardTitle">Couleur du plateau</string>
+        <string name="ColorBoardText">Définir la couleur d\'affichage du plateau</string>
+        <string name="FullScreenTitle">Plein écran</string>
+        <string name="FullScreenText">Affiche le jeu en plein écran</string>
+        <string name="ScreenPrefs"> Affichage </string>
+        <string name="RulesTitle">Règles du jeu</string>
+        <string name="DrawTitle">Pioche illimitée</string>
+        <string name="DrawText">Permet de piocher tant qu\'il y a des dominos dans la pioche</string>  
+        
+        <string name="MovingTitle"> Effet de Transitions </string>
+        <string name="MovingText"> Effet de transition lorsque le joueur adversaire pose un domino</string>   
+    
+        <string name="DiffTitle"> Niveau de difficulté </string>
+		<string name="DiffText"> Change la stratégie de l\'ordinateur </string>
+</resources>

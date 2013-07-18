@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Domino</string>
+    
+    <!-- Layout String -->
+    
+    <string name="infoString">More to come here -> . </string>
+  
+    <!--  Buttons -->
+    <string name="quit">Exit</string>
+    <string name="newGame">New Game</string>
+    <string name="menu">Menu</string>
+    <string name="drawButton">Draw</string>
+    <string name="settingsButton">Settings</string>
+    <string name="resume">Resume</string>
+    <string name="helpButton">Help</string>
+
+    <!-- -->
+    <string name="firstPlayerWarning">You are the first player!</string>
+    
+    <!-- Alertes fin de jeu -->
+    <string name="wonTitle">Congratulations</string>
+    <string name="wonMessage">You have won!</string>
+    
+    <string name="lostTitle">Too bad</string>
+    <string name="lostMessage">You lost</string>
+    
+    <string name="endDrawTitle">Too bad</string>
+    <string name="endDrawMessage">This game ends in a draw!</string>
+    
+       <!-- Status bar -->
+    <string name="remaining">Remaining tiles </string> 
+    <string name="opponent"> Opponent: </string>
+    <string name="stock"> Stock:  </string>
+    
+     <string name="htmlHelp"> file:///android_asset/help-string.html</string>
+     
+        <!-- Settings menu -->
+        <string name="ColorTilesTitle">Tiles color</string>
+        <string name="ColorTilesText">Define the tiles\'s color</string>
+        <string name="ColorBoardTitle">Board\'s color</string>
+        <string name="ColorBoardText">Define the Board\'s color</string>
+        <string name="FullScreenTitle">Full Screen</string>
+        <string name="FullScreenText">Show the game in full screen</string>
+        <string name="ScreenPrefs"> Display </string>
+        <string name="RulesTitle">Rules</string>
+        <string name="DrawTitle">Unlimited draws</string>
+        <string name="DrawText">Allow to draw as many time as desired, as long as there are tiles in the pile</string>
+        
+        <string name="MovingTitle"> Transition effect </string>
+        <string name="MovingText"> Shows tile\'s opponent moving while he\'s putting it on a board </string>   
+		<string name="DiffTitle"> Difficulty level </string>
+		<string name="DiffText"> Change computer strategy </string>
+
+</resources>

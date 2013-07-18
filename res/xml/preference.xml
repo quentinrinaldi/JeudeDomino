@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory android:title="@string/ScreenPrefs">
+        <ListPreference 
+            android:key="color_pref" 
+            android:entryValues="@array/colorvalues" 
+            android:entries="@array/colorentries" 
+            android:title="@string/ColorTilesTitle" 
+            android:summary="@string/ColorTilesText"
+            android:defaultValue="0"/>
+        <ListPreference 
+            android:key="background_pref" 
+            android:entryValues="@array/backgroundvalues" 
+            android:entries="@array/backgroundentries" 
+            android:title="@string/ColorBoardTitle" 
+            android:summary="@string/ColorBoardText"
+            android:defaultValue="0"/>
+        <CheckBoxPreference android:title="@string/FullScreenTitle" android:summary="@string/FullScreenText" android:key="full_screen" android:defaultValue="false"/>
+        <CheckBoxPreference android:title="@string/MovingTitle" android:summary="@string/MovingText" android:key="moving" android:defaultValue="true"/>
+    </PreferenceCategory>    
+    
+    <PreferenceCategory android:title="@string/RulesTitle">
+        <CheckBoxPreference android:title="@string/DrawTitle" android:summary="@string/DrawText" android:key="limite_pioche" android:defaultValue="false"/>
+    	<ListPreference 
+            android:key="diff_pref" 
+            android:entryValues="@array/diffvalues" 
+            android:entries="@array/diffentries" 
+            android:title="@string/DiffTitle" 
+            android:summary="@string/DiffText"
+            android:defaultValue="0"/>
+    </PreferenceCategory>
+    
+
+</PreferenceScreen>
