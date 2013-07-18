@@ -18,6 +18,9 @@ public class Plateau {
     private boolean transG,transD;
     private int dxG,dxD,nbG,nbD;
     private DominoApplication app;
+    private boolean isPlayingAtRight;
+    private boolean isPlayingAtLeft;
+    private Domino dominoBeingPlaced;
     
     
     /** Instance a board **/
@@ -44,6 +47,9 @@ public class Plateau {
         nbG=-1;
         nbD=0;
         
+        dominoBeingPlaced=null;
+        isPlayingAtRight=false;
+        isPlayingAtLeft=false;
         Log.d("testapp", "plateau crŽe ! centerX : "+centerX + "centerY: "+ centerY);
         
         
@@ -56,10 +62,17 @@ public class Plateau {
      * @param d Domino which will be put on the left of the board
      */
     public void addG(Domino d) {
+    	Log.d("testapp", "ajout de "+d+" a gauche");
+    	isPlayingAtRight=false;
+        isPlayingAtLeft=true;
+        dominoBeingPlaced=d;
+    	Log.d("testapp", "longd:" +longd + "largd: "+ largd);
         fixposG(d);
         p_content.add(0, d);    //The domino is put at the begining of the ArrayList p_content
         nbG++;
-
+        isPlayingAtRight=false;
+        isPlayingAtLeft=false;
+        dominoBeingPlaced=null;
     }
     
     /**
@@ -67,9 +80,16 @@ public class Plateau {
      * @param d Domino which will be put at the right of the board
      */
     public void addD(Domino d) { //The domino is put at the end of the ArrayList p_content   	  Domino-->void
-        fixposD(d);
+    	Log.d("testapp", "ajout de "+d+" a droite");
+    	isPlayingAtRight=true;
+        isPlayingAtLeft=false;
+        dominoBeingPlaced=d;
+    	fixposD(d);
         p_content.add(d);
         nbD++;
+        isPlayingAtRight=false;
+        isPlayingAtLeft=false;
+        dominoBeingPlaced=null;
     }
     
     
@@ -170,8 +190,10 @@ public class Plateau {
                         if (y-largd <limite_up) { //plus de place
                             //this.move_down();
                             Log.d("Testapp","y:"+y+"y-largd-longd:"+(y-largd-longd));
-                            dec=this.move_down(Math.abs((int)(y-largd-largd-limite_up)));
+                            dec=Math.abs((int)(y-largd-largd-limite_up));
                             d.setY(d.getY()+dec);
+                            this.move_down(dec);
+                            
                         }
                     }
                     else {                  //Sinon on avance normalement
@@ -217,8 +239,10 @@ public class Plateau {
                      transG=true;
                      if (y-largd-largd<limite_up) { // plus de place
                          Log.d("Testapp","y:"+y+"y-largd-longd:"+(y-largd-largd));
-                         dec=this.move_down(Math.abs((int)(y-largd-largd-limite_up)));
+                         dec=Math.abs((int)(y-largd-largd-limite_up));
                          d.setY(d.getY()+dec);
+                         this.move_down(dec);
+                         
                      }
                  }
                  else {
@@ -270,9 +294,11 @@ public class Plateau {
                         d.setY(y);
                         transD=true;
                         if (y+longd+largd >limite_down) {
-                            dec=this.move_up(Math.abs((int)(y+longd+largd-limite_down)));
+                        	dec=Math.abs((int)(y+longd+largd-limite_down));
+                        	d.setY(d.getY()-dec);
+                            this.move_up(dec);
                  //           this.move_up();
-                            d.setY(d.getY()-dec);
+                            
                         }
                     }
                      else {
@@ -313,8 +339,10 @@ public class Plateau {
                      d.setR(1);
                      transD=true;
                      if (y+longd+largd >limite_down) {
-                            dec=this.move_up(Math.abs((int)(y+longd+largd-limite_down)));
-                            d.setY(d.getY()-dec);
+                    	 dec=Math.abs((int)(y+longd+largd-limite_down));
+                    	 d.setY(d.getY()-dec);
+                         this.move_up(dec);
+                            
                      }
                  }
                  else {
@@ -344,6 +372,7 @@ public class Plateau {
             Log.v("Coucou !!!!!!"," (A: "+d.getA()+"B: "+d.getB()+" R:"+d.getR()+"(x,y): ("+d.getX()+","+d.getY()+") dx:"+dxD);
         }
    public Rect getCoordD() {
+	   Log.d("testapp", "cood longd: "+ longd + "coord: largd" + largd);
         Domino d;
     if (getNbDominos()>0) {
          d=getDominoD();
@@ -486,6 +515,13 @@ public class Plateau {
             for (int j=nbG+1;j<=nbG+nbD;j++) {
                 pl.addD(p_content.get(j));
             }
+            if (isPlayingAtRight==true) {
+            	pl.addD(dominoBeingPlaced);
+            }
+            else if (isPlayingAtLeft)
+            {
+            	pl.addG(dominoBeingPlaced);
+            }
           //  this.p_content=pl.p_content;
             return pl;
         }
@@ -524,7 +560,8 @@ public class Plateau {
     {
     	Log.d("testapp", "preparation des parametres pour remplacement");
         TilesPlayerView tv = this.app.getTilesv();
-        this.app.setTileSize(this.longd-5, this.largd-5);
+        this.app.setTileSize(this.longd-10, this.largd-5);
+        tv.setTileSize(this.longd-10,this.largd-5);
         tv.refreshSurface();
     }
 

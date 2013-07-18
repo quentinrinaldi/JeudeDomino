@@ -523,9 +523,10 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 		}
 		else {
 			if (height > width) {
-				longd=(int) (width/4.45f);
+				//longd=(int) (width/4.45f);
+				longd=(int) (width/3.8f);
 			}
-			else {
+			else { 
 				longd=(int) (width/7.8f);
 			}
 		}
@@ -547,6 +548,11 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 	      }
 	    }
 	  }
+	
+	public void setTileSize(int longd, int largd) {
+        this.longd = longd;
+        this.largd = largd;
+    }
 }
 
 

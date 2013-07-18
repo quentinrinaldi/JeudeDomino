@@ -217,11 +217,21 @@ public class DominoApplication extends Application {
     }
 
     public void surfaceChanged() {
-      /*  pl.setTileSize(longd, largd);
-        this.config_board(width, height);
-        this.fixHumanHand();
-        this.resizeBoard();
-        */
+    	this.limite_up=largd/2;
+        this.limite_xG=5+largd;
+        this.limite_xD=width-5-largd;
+        
+        float n = (float) 7;
+        int slongd = this.longd + 6;
+        int slargd = this.largd + 6;
+        int nb = (width - 15) / slongd;
+
+
+        int col = (int) Math.ceil(n / nb);
+
+        int yfin = this.height - largd / 2;
+        int ydebut = yfin - (col * (slargd));
+        this.limite_down = ydebut - largd;
     }
 
     public void reset() {
@@ -318,6 +328,8 @@ public class DominoApplication extends Application {
     }
 
     public void setConfig(int width, int height, int longd, int largd) {
+    	
+    	Log.d("testapp", "setconfig");
         this.width = width;
         this.height = height;
         this.longd=longd;
