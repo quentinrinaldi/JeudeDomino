@@ -174,7 +174,6 @@ public class DominoApplication extends Application {
         if (gaming) {
             return a.getplayerhand(getJ1().getId());
         } else {
-            //    Log.d("Testapp","faux !!!\n");
             return mainVide;
         }
     }
@@ -255,13 +254,12 @@ public class DominoApplication extends Application {
 
 
         int col = (int) Math.ceil(n / nb);
-        Log.d("testapp", ""+col+" lignes");
 
         int yfin = this.height - largd / 2;
         int cptd = 0;
         int ydebut = yfin - (col * (slargd));
         this.limite_down = ydebut - largd / 2;
-        Log.d("testapp", "limitup = " + this.limite_up);
+        
         int xdebut = 15;
 
 
@@ -324,7 +322,7 @@ public class DominoApplication extends Application {
 
 
     public void updateLimiteDown() {
-    	Log.d("testapp","update limite up");
+    	Log.d("testapp","update limite down :" + limite_down);
         pl.updateLimiteDown();
     }
 
@@ -353,7 +351,6 @@ public class DominoApplication extends Application {
     }
 
     public void setTileSize(int longd, int largd) {
-    	Log.d("testapp", "maj longd:"+longd+"largd :"+largd+ "chez app");
         this.longd = longd;
         this.largd = largd;
     }

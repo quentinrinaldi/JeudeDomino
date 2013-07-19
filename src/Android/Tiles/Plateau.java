@@ -18,9 +18,9 @@ public class Plateau {
     private boolean transG,transD;
     private int dxG,dxD,nbG,nbD;
     private DominoApplication app;
-    private boolean isPlayingAtRight;
-    private boolean isPlayingAtLeft;
-    private Domino dominoBeingPlaced;
+    public boolean isPlayingAtRight;
+    public boolean isPlayingAtLeft;
+    public Domino dominoBeingPlaced;
     private boolean sizeIsCorrect;
     
     /** Instance a board **/
@@ -173,7 +173,6 @@ public class Plateau {
         return (p_content.get((getNbDominos()-1))).getR();
     }
     public void fixposG(Domino d) {
-        affiche_limite();
         int dec;
         int n = getNbDominos();
         if (n==0) {
@@ -193,9 +192,7 @@ public class Plateau {
                         d.setX(x-largd);
                         d.setY(y-largd);
                         transG=true;
-                        if (y-largd <limite_up) { //plus de place
-                            //this.move_down();
-                            Log.d("Testapp","y:"+y+"y-largd-longd:"+(y-largd-longd));
+                        if (y-largd -largd<limite_up) { //plus de place
                             dec=Math.abs((int)(y-largd-largd-limite_up));
                             d.setY(d.getY()+dec);
                             this.move_down(dec);
@@ -244,7 +241,6 @@ public class Plateau {
                      d.setR(1);
                      transG=true;
                      if (y-largd-largd<limite_up) { // plus de place
-                         Log.d("Testapp","y:"+y+"y-largd-longd:"+(y-largd-largd));
                          dec=Math.abs((int)(y-largd-largd-limite_up));
                          d.setY(d.getY()+dec);
                          this.move_down(dec);
@@ -265,7 +261,6 @@ public class Plateau {
             
                 }
              else if (transG==true) {    //On vient de renverser
-                 Log.d("Testapp","y:"+y+"y-largd-longd:"+(y-largd-longd));
                         d.setX(x-largd);
                         d.setY(y-largd);
                         d.setR(0);
@@ -275,8 +270,6 @@ public class Plateau {
                 
                 } 
             }
-            Log.d("Testapp",""+this);
-         //   Log.v("Coucou !!!!!!"," (A: "+d.getA()+"B: "+d.getB()+" R:"+d.getR()+"(x,y): ("+d.getX()+","+d.getY()+") dx:"+dxD);
         }
   
     public void fixposD(Domino d) {
@@ -378,7 +371,6 @@ public class Plateau {
             Log.v("Coucou !!!!!!"," (A: "+d.getA()+"B: "+d.getB()+" R:"+d.getR()+"(x,y): ("+d.getX()+","+d.getY()+") dx:"+dxD);
         }
    public Rect getCoordD() {
-	   Log.d("testapp", "cood longd: "+ longd + "coord: largd" + largd);
         Domino d;
     if (getNbDominos()>0) {
          d=getDominoD();
@@ -427,7 +419,6 @@ public class Plateau {
 
     public Rect getCoordG() {
         Domino d;
-        Log.d("testapp","longdgc: "+longd + "largd:" + largd);
     if (getNbDominos()>0) {
          d=getDominoG();
          float x=d.getX();
@@ -473,8 +464,6 @@ public class Plateau {
 }
     public void updateLimiteDown() {
         this.limite_down=this.app.getLimite_down();
-        Log.d("testapp", "limite_up mis ˆ jour");
-        this.affiche_limite();
         
     }
     
@@ -487,7 +476,7 @@ public class Plateau {
 
     
     public int move_up(int y) {
-    	Log.d("testapp","move_up");
+    	Log.d("testapp","move_up de " + y);
         for (Domino d:p_content) {
             d.setY(d.getY()-y);
         }
@@ -499,7 +488,7 @@ public class Plateau {
     }
     
     public int move_down(int y) {
-    	Log.d("testapp","move_down");
+    	Log.d("testapp","move_down de " + y);
         for (Domino d: p_content) {
             d.setY(d.getY()+y);
         }
@@ -518,32 +507,34 @@ public class Plateau {
     	Log.d("testapp","crŽation du nouveau plateau pour remplacement");
         if (nbG != -1) {
             Plateau pl= new Plateau(app);
-           // pl.setTileSize(longd, largd);
-            //pl.setLimite(limite_xD+largd, limite_xG-largd, limite_up, limite_down);
+            pl.dominoBeingPlaced = this.dominoBeingPlaced;
+            pl.isPlayingAtLeft=this.isPlayingAtLeft;
+            pl.isPlayingAtRight=this.isPlayingAtRight;
             for (int i=this.nbG;i>=0;i--) {
                pl.addG(p_content.get(i));
             }
             for (int j=nbG+1;j<=nbG+nbD;j++) {
                 pl.addD(p_content.get(j));
             }
-            if (isPlayingAtRight==true) {
-            	pl.addD(dominoBeingPlaced);
-            }
-            else if (isPlayingAtLeft)
-            {
-            	pl.addG(dominoBeingPlaced);
-            }
-            Log.d("testapp" ,"size :" + sizeIsCorrect );
+            
             if (pl.sizeIsCorrect()) {
-            	Log.d("testapp","sizeisCorrect !! longd: "+longd +"largd :" + largd);
+            	if (pl.isPlayingAtRight==true) {
+                	pl.addD(pl.dominoBeingPlaced);
+                	
+                }
+                else if (pl.isPlayingAtLeft)
+                {
+                	pl.addG(pl.dominoBeingPlaced);
+                }
+            	
             	TilesPlayerView tv = this.app.getTilesv();
-                
-                tv.setTileSize(this.longd-10,this.largd-5);
+            	tv.clearMap();
+                tv.setTileSize(app.getLongd(),app.getLargd());
                 app.setPl(pl);
                 app.getA().setPl(pl);
+        	    app.fixHumanHand();
+
             }
-          //  this.p_content=pl.p_content;
-            Log.d("testapp" , "return :" + pl.adress());
             return pl;
         }
         else {

@@ -214,7 +214,6 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 								alert.setCanceledOnTouchOutside(false);
 
 								if (e.getJoueur().isComputer()) {
-									// Log.d("Testapp", "TEST2222");
 									alert.setTitle(app.getString(R.string.lostTitle));
 									alert.setMessage(app.getString(R.string.lostMessage));
 								}
@@ -298,8 +297,6 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 			if (touchedTile != -1) {
 				canvas.drawRect(app.getPl().getCoordG(), paint2);
 				canvas.drawRect(app.getPl().getCoordD(), paint2);
-				Log.d("testapp", "testc" +app.getPl().getCoordG().bottom);
-				Log.d("testapp", app.getPl().adress());
 			}
 
 
@@ -386,12 +383,7 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 				canvas.drawBitmap(getBitmap(dh.getId()),dh.getX(),dh.getY(),paint1);
 
 			}
-
-
-
 		}
-
-
 	}
 
 
@@ -418,10 +410,14 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 
 	public void surfaceChanged(SurfaceHolder paramSurfaceHolder, int format, int width, int height)
 	  {
+		if (app.getGaming()) {
 		Log.d("testapp", "surfaceChanged !");
 	    setLayoutParams(new LayoutParams(width, height));
 	    reset(this.appContext);
-	    refreshSurface();
+	    app.getPl().fixPl();
+	    this.clearMap();
+	    app.fixHumanHand();
+		}
 	  }
 
 
@@ -536,24 +532,9 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 		largd = (int) (longd/2f);
 	}
 	
-	public void refreshSurface()
+	public void clearMap()
 	  {
 	    this.map.clear();
-	    if (this.app.getGaming())
-	    {
-	      this.app.surfaceChanged();  /* A supprimer peut etre */
-	      
-	      Plateau pl = this.app.getPl().fixPl();
-	      Log.d("testapp", "nouveau plateau :" +pl.adress());
-	      if (pl != null)
-	      {
-	        this.app.setPl(pl);
-	        this.app.getA().setPl(pl);
-	      }
-	      else {
-	    	  Log.d("testapp","error");
-	      }
-	    }
 	  }
 	
 	public void setTileSize(int longd, int largd) {
