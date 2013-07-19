@@ -13,15 +13,15 @@ public class Plateau {
     /**
      * ArrayList which contain all tiles on the board*/
     private ArrayList <Domino> p_content;
-    private int ilongd,limite_up;
-    final private int limite_xG, limite_xD, longd, largd, limite_down, centerX, centerY;
+    private int ilongd,limite_down,longd, largd ;
+    final private int limite_xG, limite_xD, limite_up, centerX, centerY;
     private boolean transG,transD;
     private int dxG,dxD,nbG,nbD;
     private DominoApplication app;
     private boolean isPlayingAtRight;
     private boolean isPlayingAtLeft;
     private Domino dominoBeingPlaced;
-    
+    private boolean sizeIsCorrect;
     
     /** Instance a board **/
     public Plateau (DominoApplication app) {
@@ -36,7 +36,7 @@ public class Plateau {
         largd=app.getLargd();
         limite_up=app.getLimite_up();
         limite_down=app.getLimite_down();
-        
+       
         this.centerX=(int)((limite_xD)*(1.0)/(2.0));
         this.centerY=(int)((limite_down)*(1.0)/(2.0));
         transG=false;
@@ -47,14 +47,20 @@ public class Plateau {
         nbG=-1;
         nbD=0;
         
+        sizeIsCorrect=true;
+        
         dominoBeingPlaced=null;
         isPlayingAtRight=false;
         isPlayingAtLeft=false;
-        Log.d("testapp", "plateau crée ! centerX : "+centerX + "centerY: "+ centerY);
+        Log.d("testapp", "plateau crée ! centerX : "+centerX + "centerY: "+ centerY +"longd : "+longd+" largd:"+ largd + "adresse: "+ super.toString());
         
         
         
         
+    }
+    
+    public String adress() {
+    	return "adress : "+ super.toString();
     }
     
     /**
@@ -421,6 +427,7 @@ public class Plateau {
 
     public Rect getCoordG() {
         Domino d;
+        Log.d("testapp","longdgc: "+longd + "largd:" + largd);
     if (getNbDominos()>0) {
          d=getDominoG();
          float x=d.getX();
@@ -464,8 +471,8 @@ public class Plateau {
         return new Rect(centerX,centerY-largd/2,centerX+largd,centerY-largd/2+longd);
     }
 }
-    public void updateLimiteUp() {
-        this.limite_up=this.app.getLimite_up();
+    public void updateLimiteDown() {
+        this.limite_down=this.app.getLimite_down();
         Log.d("testapp", "limite_up mis à jour");
         this.affiche_limite();
         
@@ -503,6 +510,10 @@ public class Plateau {
         return y;
     }
     
+    public boolean sizeIsCorrect() {
+    	return sizeIsCorrect;
+    }
+    
     public Plateau fixPl() { /// A faire par rapport au appDomino
     	Log.d("testapp","création du nouveau plateau pour remplacement");
         if (nbG != -1) {
@@ -522,7 +533,17 @@ public class Plateau {
             {
             	pl.addG(dominoBeingPlaced);
             }
+            Log.d("testapp" ,"size :" + sizeIsCorrect );
+            if (pl.sizeIsCorrect()) {
+            	Log.d("testapp","sizeisCorrect !! longd: "+longd +"largd :" + largd);
+            	TilesPlayerView tv = this.app.getTilesv();
+                
+                tv.setTileSize(this.longd-10,this.largd-5);
+                app.setPl(pl);
+                app.getA().setPl(pl);
+            }
           //  this.p_content=pl.p_content;
+            Log.d("testapp" , "return :" + pl.adress());
             return pl;
         }
         else {
@@ -558,11 +579,20 @@ public class Plateau {
     
     public void resizedTiles() 
     {
-    	Log.d("testapp", "preparation des parametres pour remplacement");
-        TilesPlayerView tv = this.app.getTilesv();
+    //	this.longd=this.longd-10;
+      //  this.largd=this.largd-5;
         this.app.setTileSize(this.longd-10, this.largd-5);
-        tv.setTileSize(this.longd-10,this.largd-5);
-        tv.refreshSurface();
+        sizeIsCorrect=false;
+        
+        this.fixPl();
+    	Log.d("testapp", "preparation des parametres pour remplacement");
+      //  TilesPlayerView tv = this.app.getTilesv();
+        
+       // tv.setTileSize(this.longd-10,this.largd-5);
+      //  app.setPl(this);
+      //  app.getA().setPl(this);
+        
+       // tv.refreshSurface();
     }
 
 }

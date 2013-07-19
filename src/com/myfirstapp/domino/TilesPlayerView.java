@@ -298,6 +298,8 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 			if (touchedTile != -1) {
 				canvas.drawRect(app.getPl().getCoordG(), paint2);
 				canvas.drawRect(app.getPl().getCoordD(), paint2);
+				Log.d("testapp", "testc" +app.getPl().getCoordG().bottom);
+				Log.d("testapp", app.getPl().adress());
 			}
 
 
@@ -399,6 +401,7 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 		}
 
 		Bitmap b=app.getBitmap(id);
+		//Log.d("testapp", "bitmap : "+longd+" /"+ largd);
 		if (id<100) {
 			b=scaleToFill(b,longd,largd);
 		}
@@ -524,7 +527,7 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 		else {
 			if (height > width) {
 				//longd=(int) (width/4.45f);
-				longd=(int) (width/3.8f);
+				longd=(int) (width/3.6f);
 			}
 			else { 
 				longd=(int) (width/7.8f);
@@ -539,12 +542,16 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 	    if (this.app.getGaming())
 	    {
 	      this.app.surfaceChanged();  /* A supprimer peut etre */
-	      Log.d("testapp", "nouveau plateau");
+	      
 	      Plateau pl = this.app.getPl().fixPl();
+	      Log.d("testapp", "nouveau plateau :" +pl.adress());
 	      if (pl != null)
 	      {
 	        this.app.setPl(pl);
 	        this.app.getA().setPl(pl);
+	      }
+	      else {
+	    	  Log.d("testapp","error");
 	      }
 	    }
 	  }

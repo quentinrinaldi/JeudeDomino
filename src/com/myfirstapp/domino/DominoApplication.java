@@ -68,7 +68,7 @@ public class DominoApplication extends Application {
      * @return the board
      */
     public Plateau getPl() {
-        return pl;
+        return this.pl;
     }
 
     /**
@@ -217,6 +217,7 @@ public class DominoApplication extends Application {
     }
 
     public void surfaceChanged() {
+    	Log.d("testapp", "surcacechanged : longd : "+longd+"largd:"+largd);
     	this.limite_up=largd/2;
         this.limite_xG=5+largd;
         this.limite_xD=width-5-largd;
@@ -271,7 +272,7 @@ public class DominoApplication extends Application {
                 cptd++;
             }
         }
-        this.updateLimiteUp();
+        this.updateLimiteDown();
 
         if ((pl.getNbDominos() > 2) && (ydebut < (pl.getposyD() + largd + largd / 2))) {
         	Log.d("testapp", "on monte ! fix");
@@ -322,9 +323,9 @@ public class DominoApplication extends Application {
     }
 
 
-    public void updateLimiteUp() {
+    public void updateLimiteDown() {
     	Log.d("testapp","update limite up");
-        pl.updateLimiteUp();
+        pl.updateLimiteDown();
     }
 
     public void setConfig(int width, int height, int longd, int largd) {
@@ -352,6 +353,7 @@ public class DominoApplication extends Application {
     }
 
     public void setTileSize(int longd, int largd) {
+    	Log.d("testapp", "maj longd:"+longd+"largd :"+largd+ "chez app");
         this.longd = longd;
         this.largd = largd;
     }
