@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.LinearLayout.LayoutParams;
 import java.util.ArrayList;
 
+
 public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener, View.OnClickListener
 {   
 	/** System params */
@@ -163,10 +164,13 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 				touchedTile=c.newinspectHand(app.getHumanHand()); //search for a tile matching coord c
 				Log.d("testapp", "x: "+event.getX() + " y: " + event.getY());
 				if (touchedTile != -1) {  //A tile has been touched
+					
+					
 					d=app.getHumanHand().get(touchedTile);
 					d_old=new Coord(d);
 					distx=d_old.getX()-c.getX();
-					disty=d_old.getY()-c.getY();    
+					disty=d_old.getY()-c.getY();   
+
 				} break;
 
 			case MotionEvent.ACTION_MOVE :
@@ -522,8 +526,8 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 		}
 		else {
 			if (height > width) {
-				//longd=(int) (width/4.45f);
-				longd=(int) (width/3.6f);
+				longd=(int) (width/4.45f);
+				//longd=(int) (width/3.6f);
 			}
 			else { 
 				longd=(int) (width/7.8f);
