@@ -69,6 +69,7 @@ public class Plateau {
      */
     public void addG(Domino d) {
     	Log.d("testapp", "ajout de "+d+" a gauche");
+    	d.setOriginCoord(d.getCoord());
     	isPlayingAtRight=false;
         isPlayingAtLeft=true;
         dominoBeingPlaced=d;
@@ -87,6 +88,7 @@ public class Plateau {
      */
     public void addD(Domino d) { //The domino is put at the end of the ArrayList p_content   	  Domino-->void
     	Log.d("testapp", "ajout de "+d+" a droite");
+    	d.setOriginCoord(d.getCoord());
     	isPlayingAtRight=true;
         isPlayingAtLeft=false;
         dominoBeingPlaced=d;

@@ -1,7 +1,10 @@
 package Android.Tiles;
 
+import com.myfirstapp.domino.DominoApplication;
 import com.myfirstapp.domino.MainActivity;
 import android.util.Log;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -11,16 +14,19 @@ public class Ordinateur extends Joueur{
     /**Instanciate a computer, linked to the referee arbitre, and whose name is nom
      * @param arbitre The referee linked to this player
      * @param nom Name of this player **/
-    public Ordinateur (Arbitre arbitre, String nom, MainActivity act) {
-        super(arbitre, nom, act);
+    public Ordinateur (Arbitre arbitre, String nom, DominoApplication app) {
+        super(arbitre, nom, app);
     }
     
+    public ArrayList<Domino> getMain () {
+    	return arbitre.getMain();
+    }
     
     /** Define the strategy of this computer: presently this is a blind strategy, the computer will try and play each and every one of his tiles until one works or he finds himself out of tiles and is required to draw**/
     @Override
     public void jeu() throws PiocheVideException, MainJouableException, AucunCoupPossibleException {
     	Log.d("testapp","jeu simple");
-    	super.content=arbitre.getMain();
+    	super.content=this.getMain();
    // 	System.out.println("main Ordinateur :" +super.content); //Show the player's hand
     	int size = arbitre.getNbDominos();
     	for (int i = 0; (i < size); i++) {
@@ -46,12 +52,15 @@ public class Ordinateur extends Joueur{
     	{ 
     		try {
     			super.draw();		//drawing
+    			app.fixComputerHand();
+    			
     		}
     		catch (PiocheVideException e) {	// If the stock is empty, the player has to pass
     			throw new AucunCoupPossibleException();
     			
     		}
     	}
+    //	app.fixComputerHand();
     }
     
     public void jeu_v2() throws PiocheVideException, MainJouableException, AucunCoupPossibleException {
@@ -128,6 +137,7 @@ public class Ordinateur extends Joueur{
                 this.jeu();
             }
         }
+      //fixComputerHand();
       }
     
     /** Return a String which indicate that the player is a computer

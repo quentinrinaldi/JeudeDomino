@@ -152,6 +152,7 @@ public class DominoApplication extends Application {
         map.put(65, BitmapFactory.decodeResource(getResources(), R.drawable.tile65));
         map.put(66, BitmapFactory.decodeResource(getResources(), R.drawable.tile66));
         map.put(166, BitmapFactory.decodeResource(getResources(), R.drawable.tile66r));
+        map.put(99, BitmapFactory.decodeResource(getResources(), R.drawable.tile99));
     }
 
     /**
@@ -205,6 +206,7 @@ public class DominoApplication extends Application {
 
             tv.setText(getString(R.string.firstPlayerWarning));
             fixHumanHand();
+            fixComputerHand();
             getA().start();
             getA().setAdvId(j2.getId());
             if (a.getFirstPlay() == false) {
@@ -277,9 +279,55 @@ public class DominoApplication extends Application {
             pl.move_up((int) Math.abs(pl.getposyD() + largd + largd / 2 - ydebut));
         }
     }
+    
+    public void fixComputerHand() {
+    	ArrayList<Domino> l = getComputerHand();
+        float n = (float) l.size();
+        int slongd = this.longd/2 + 6;
+        int slargd = this.largd/2 + 6;
+        int nb = (width - 15) / slongd;
+
+
+        int col = (int) Math.ceil(n / nb);
+        int ydebut = 5;
+        
+        int yfin = ydebut + (col * slargd);
+        int cptd = 0;
+  
+        this.limite_up = yfin + largd / 2;
+        
+        int xdebut = 15;
+        int x,y;
+
+        for (int i = 0; i < col; i++) {
+            for (int j = 0; ((j < nb) && (cptd < n)); j++) {
+            	x=xdebut + (j * slongd);
+            	y=ydebut + (i * (slargd));
+                l.get(cptd).setX(x);
+                l.get(cptd).setY(y);
+                l.get(cptd).setFather(1);
+                cptd++;
+            }
+        }
+      /*  this.updateLimiteDown();
+
+        if ((pl.getNbDominos() > 2) && (ydebut < (pl.getposyD() + largd + largd / 2))) {
+        	Log.d("testapp", "on monte ! fix");
+            pl.move_up((int) Math.abs(pl.getposyD() + largd + largd / 2 - ydebut));
+        }
+        */
+    }
 
     public void setJ2(Joueur j2) {
         this.j2 = j2;
+    }
+    
+    public ArrayList<Domino> getComputerHand() {
+        if (gaming) {
+            return a.getplayerhand(getJ2().getId());
+        } else {
+            return mainVide;
+        }
     }
 
     public int getNbDominosj2() {
@@ -418,13 +466,7 @@ public class DominoApplication extends Application {
         return tilesv;
     }
     
-    public ArrayList<Domino> getComputerHand() {
-        if (gaming) {
-            return a.getplayerhand(getJ2().getId());
-        } else {
-            return mainVide;
-        }
-    }
+
     public Activity getActivity() {
         return act;
     }

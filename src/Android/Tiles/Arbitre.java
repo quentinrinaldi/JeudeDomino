@@ -55,7 +55,7 @@ public class Arbitre {
 	 * @throws MainJouableException 
 	 */
 	public Ordinateur newPlayerO(String nom) throws PiocheVideException, MainJouableException, TooMuchPlayersException{
-		Ordinateur j = new Ordinateur(this, nom, act);
+		Ordinateur j = new Ordinateur(this, nom, app);
 		this.addJoueur(j);
 		j.setId(i);
 		if (i==0) {
@@ -81,7 +81,7 @@ public class Arbitre {
 	 * @throws MainJouableException
 	 */
 	public Humain newPlayerH(String nom) throws PiocheVideException, MainJouableException, TooMuchPlayersException{
-		Humain j = new Humain(this, nom, act);
+		Humain j = new Humain(this, nom, app);
 		this.addJoueur(j);
 
 		if (i==0) {
@@ -421,7 +421,7 @@ public class Arbitre {
 			}
 			Domino d = pioche.get();
 			if (players.get(i).isComputer()) {
-				d.setFather(1);
+				d.setR(9);
 			}
 			else {
 				d.setFather(2);

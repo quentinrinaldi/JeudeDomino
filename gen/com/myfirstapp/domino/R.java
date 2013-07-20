@@ -83,7 +83,8 @@ public final class R {
         public static final int tile65=0x7f02003d;
         public static final int tile66=0x7f02003e;
         public static final int tile66r=0x7f02003f;
-        public static final int title2=0x7f020040;
+        public static final int tile99=0x7f020040;
+        public static final int title2=0x7f020041;
     }
     public static final class id {
         public static final int LinearLayout1=0x7f070006;

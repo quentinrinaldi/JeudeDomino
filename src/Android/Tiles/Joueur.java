@@ -1,5 +1,6 @@
 package Android.Tiles;
 
+import com.myfirstapp.domino.DominoApplication;
 import com.myfirstapp.domino.MainActivity;
 import java.util.ArrayList;
 
@@ -10,18 +11,18 @@ public abstract class Joueur {
     protected ArrayList <Domino> content; //Main du joueur
     protected Arbitre arbitre;
     protected String nom;
-    protected MainActivity act;
+    protected DominoApplication app;
     protected int id;
     
    /** Generates a player whose name is "nom" and who is linked to the referee "arbitre"
     * @param arbitre Referee linked to this player
     * @param nom Name of the player
     **/
-    public Joueur(Arbitre arbitre, String nom, MainActivity act) {
+    public Joueur(Arbitre arbitre, String nom, DominoApplication app) {
         content = new ArrayList<Domino>(7);
         this.nom=nom;
         this.arbitre=arbitre;
-        this.act=act;
+        this.app=app;
         this.id=-1;
     }
     

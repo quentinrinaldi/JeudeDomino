@@ -25,7 +25,12 @@ public class Pioche {
             
             for (int i=6;i>=0;i--) {
                 for (int j=i;j>=0;j--) {
-                    p_content.add(new Domino(i,j,0,app));
+                	Domino d = new Domino(i,j,0,app);
+                	Coord originCoord = new Coord(app.getLimite_xD()*1.5f, app.getLimite_down()/2f);
+                	d.setFather(3); // Indique que le domino est dans la pioche
+                	d.setCoord(originCoord);
+                	d.setOriginCoord(originCoord);
+                    p_content.add(d);
                 }
             }
     }

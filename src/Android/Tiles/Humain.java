@@ -1,5 +1,6 @@
 package Android.Tiles;
 
+import com.myfirstapp.domino.DominoApplication;
 import com.myfirstapp.domino.MainActivity;
 import java.util.Scanner;
 /** This class is used for the interactions with the humans players **/
@@ -10,8 +11,8 @@ public class Humain extends Joueur {
 	/**Instanciates a human player
          * @param a The Referee of the game
          * @param nom Name of the human player **/
-	public Humain(Arbitre a, String nom, MainActivity act) {
-		super(a, nom, act);
+	public Humain(Arbitre a, String nom, DominoApplication app) {
+		super(a, nom, app);
 	}
 	/*
 	 * Allows one to know whether the player is human or a computer	

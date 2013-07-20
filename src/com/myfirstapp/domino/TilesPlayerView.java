@@ -52,9 +52,11 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 
 	private SparseArray<Bitmap> map;
 	private int color;
-	private boolean transRunning;
-	private Coord dep,fin,fun_param,bitm;
-	private float yIncr;
+	private boolean transRunningBoard;
+	private boolean transRunningComputerHand;
+	private Coord dep,fin,fun_param,bitmBoard, bitmHand;
+	private float yIncrBoard;
+	private float yIncrHand;
 	private float xfin,yfin;
 
 	private boolean state_exit;
@@ -102,7 +104,8 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 		height=holder.getSurfaceFrame().bottom;
 		width=holder.getSurfaceFrame().right;
 		getAdjustedDimension(appContext);
-		transRunning=false;
+		transRunningBoard=false;
+		transRunningComputerHand=false;
 		
 		Log.d("testapp","transmission des parametres");
 		this.app.setConfig((int)width, (int)height, this.longd, this.largd);
@@ -152,7 +155,7 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 	// Méthode de View.OnTouchListener
 	public boolean onTouch(View view, MotionEvent event) {
 
-		if (app.getGaming() && (! transRunning)) {
+		if (app.getGaming() && (! transRunningBoard) && (! transRunningComputerHand)) {
 
 			/** Touched point coord */
 			Coord c=new Coord(event.getX(),event.getY()); 
@@ -296,7 +299,7 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 			Plateau pl = app.getPl();
 			ArrayList<Domino> handPlayer=app.getHumanHand();
 			Bitmap bitmap;
-
+			Bitmap blankBitmap = this.getBitmap(99);
 
 			if (touchedTile != -1) {
 				canvas.drawRect(app.getPl().getCoordG(), paint2);
@@ -323,41 +326,44 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 				} 
 
 
+				
+				if (di.getFather()==1 && transActivated && !transRunningComputerHand) {
+					
 
-				if (di.getFather()==1 && transActivated) {
-
-					if (!transRunning) {
+					if (!transRunningBoard) {
 
 						disable_button();
 						fin=di.getCoord();
 						if (di.getR()==2) {
 							fin.setY(fin.getY()-largd/2);
 						}
-						dep=new Coord(100,-100);
+						dep=di.getOriginCoord();
 						xfin=fin.getX();
 						yfin=fin.getY();
 
-						bitm = new Coord(dep.getX(),dep.getY());
-						yIncr=20;
+						bitmBoard = new Coord(dep.getX(),dep.getY());
+						yIncrBoard=20;
 						fun_param=Coord.translate(dep, fin);
-						transRunning=true;
+						transRunningBoard=true;
+						Log.d("testapp" , "testf :" +fun_param +"/ dep: "+ dep + "fin : "+ fin);
 						super.postInvalidate();
 
 					}
 					else {
-						if (Math.abs(bitm.getY()-yfin) > 25) {
+						
+						if (Math.abs(bitmBoard.getY()-yfin) > 25) {
 
+							Log.d("testapp","situation : " + this.bitmBoard);
 
+							bitmBoard.setY((bitmBoard.getY()+yIncrBoard));
 
-							bitm.setY((bitm.getY()+yIncr));
-
-							bitm.setX(Coord.fun(fun_param.getX(), fun_param.getY(), bitm.getY()));
-							canvas.drawBitmap(bitmap,bitm.getX(),bitm.getY(),paint1);
+							bitmBoard.setX(Coord.fun(fun_param.getX(), fun_param.getY(), bitmBoard.getY()));
+							canvas.drawBitmap(bitmap,bitmBoard.getX(),bitmBoard.getY(),paint1);
 							super.postInvalidate();
 						}
 						else {
 							di.setFather(2);
-							transRunning=false;
+							transRunningBoard=false;
 
 							enable_button();
 
@@ -387,6 +393,59 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 				canvas.drawBitmap(getBitmap(dh.getId()),dh.getX(),dh.getY(),paint1);
 
 			}
+			
+			//Drawing of computer's hand
+			for (Domino dc: app.getComputerHand()) {
+				
+			/*	if (dc.getFather()==3 && transActivated) {
+					
+					if (!transRunningComputerHand) {
+						
+						disable_button();
+						fin=dc.getCoord();
+						
+						dep=dc.getOriginCoord();
+						xfin=fin.getX();
+						yfin=fin.getY();
+
+						bitmHand = new Coord(dep.getX(),dep.getY());
+						yIncrHand=-10;
+						fun_param=Coord.translate(dep, fin);
+						Log.d("testapp", "funparam : " + fun_param);
+						transRunningComputerHand=true;
+						super.postInvalidate();
+
+					}
+					else {
+						if (Math.abs(bitmHand.getY()-yfin) > 25) {
+							//Log.d("testapp","bitm : " + bitm);
+							Log.d("testapp", "debut : " + dep +" fin : " + fin);
+
+
+
+							bitmHand.setY((bitmHand.getY()+yIncrHand));
+
+							bitmHand.setX(Coord.fun(fun_param.getX(), fun_param.getY(), bitmHand.getY()));
+							canvas.drawBitmap(blankBitmap,bitmHand.getX(),bitmHand.getY(),paint1);
+							super.postInvalidate();
+						}
+						else {
+							dc.setFather(1);
+							transRunningComputerHand=false;
+							enable_button();
+
+							canvas.drawBitmap(blankBitmap,xfin,yfin,paint1);
+							super.postInvalidate();
+
+						}
+					}
+				}
+				else {
+				*/
+				canvas.drawBitmap(getBitmap(99),dc.getX(),dc.getY(),paint1);
+				//}
+			}
+			
 		}
 	}
 
@@ -398,8 +457,11 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 
 		Bitmap b=app.getBitmap(id);
 		//Log.d("testapp", "bitmap : "+longd+" /"+ largd);
-		if (id<100) {
+		if (id<99) {
 			b=scaleToFill(b,longd,largd);
+		}
+		else if (id==99) {
+			b=scaleToFill(b,longd/2,largd/2);
 		}
 		else {
 			b=scaleToFill(b,largd,longd);
@@ -484,9 +546,6 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 		return gameThread;
 	}
 
-	public void setTransRunning(boolean b) {
-		transRunning=b;
-	}
 
 
 	public void disable_button() {

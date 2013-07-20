@@ -15,6 +15,7 @@ public class Domino {
     private DominoApplication app;
     private int father;
     private boolean trans;
+    private Coord originCoord;
     /** Creates a tile whose parts are a and b
      * @param a First part of the tile
      * @param b Second part of the tile **/
@@ -230,5 +231,13 @@ public class Domino {
     
     public void setTrans(boolean trans) {
         this.trans=trans;
+    }
+    
+    public void setOriginCoord(Coord c) {
+    	this.originCoord=c;
+    }
+    
+    public Coord getOriginCoord() {
+    	return this.originCoord;
     }
 }
