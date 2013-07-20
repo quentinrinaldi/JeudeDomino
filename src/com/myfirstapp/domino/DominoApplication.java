@@ -305,7 +305,7 @@ public class DominoApplication extends Application {
             	y=ydebut + (i * (slargd));
                 l.get(cptd).setX(x);
                 l.get(cptd).setY(y);
-                l.get(cptd).setFather(1);
+             //   l.get(cptd).setFather(1);
                 cptd++;
             }
         }

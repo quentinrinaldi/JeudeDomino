@@ -397,7 +397,7 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 			//Drawing of computer's hand
 			for (Domino dc: app.getComputerHand()) {
 				
-			/*	if (dc.getFather()==3 && transActivated) {
+				if (dc.getFather()==3 && transActivated) {
 					
 					if (!transRunningComputerHand) {
 						
@@ -441,9 +441,9 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 					}
 				}
 				else {
-				*/
+				
 				canvas.drawBitmap(getBitmap(99),dc.getX(),dc.getY(),paint1);
-				//}
+				}
 			}
 			
 		}
