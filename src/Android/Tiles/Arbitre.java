@@ -424,6 +424,7 @@ public class Arbitre {
 				d.setR(9);
 			}
 			else {
+				app.getTilesv().indicator = 2;
 				//d.setFather(2);
 			}
 			(mains.get(i)).add(d);
