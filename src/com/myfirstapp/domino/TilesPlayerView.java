@@ -441,7 +441,7 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 						Log.d("testapp" , "dest :" +fin + " du "+ dc.getId() );
 
 						bitmHand = new Coord(dep.getX(),dep.getY());
-						yIncrHand=+30;
+						yIncrHand=30;
 						fun_param=Coord.translate(dep, fin);
 						Log.d("testapp", "funparam : " + fun_param);
 						transRunningHumanHand=true;
@@ -480,7 +480,7 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 							}
 
 							else {
-								dc.setFather(1);
+								dc.setFather(0);
 								transRunningHumanHand=false;
 								enable_button();
 
