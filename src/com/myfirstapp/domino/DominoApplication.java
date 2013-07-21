@@ -281,6 +281,7 @@ public class DominoApplication extends Application {
     }
     
     public void fixComputerHand() {
+    	Log.d("testapp","computer hand");
     	ArrayList<Domino> l = getComputerHand();
         float n = (float) l.size();
         int slongd = this.longd/2 + 6;

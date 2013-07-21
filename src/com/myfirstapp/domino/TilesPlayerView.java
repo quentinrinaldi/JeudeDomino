@@ -10,6 +10,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -62,8 +64,11 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 	private boolean state_exit;
 	private boolean state_newgame;
 	private boolean state_stock;
+	private boolean handMovingIsFinish = true;
+	private int q= -1;
 
 	private boolean transActivated;
+	int p=0;
 
 	public TilesPlayerView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -293,6 +298,7 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 	@Override
 	public void onDraw(Canvas canvas) {
 		if (app.getGaming() && (longd > 0) && (largd> 0)) {
+			long startTime = SystemClock.uptimeMillis();
 			int i=0;
 			int r;
 			Domino di;
@@ -326,9 +332,9 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 				} 
 
 
-				
+
 				if (di.getFather()==1 && transActivated && !transRunningComputerHand) {
-					
+
 
 					if (!transRunningBoard) {
 
@@ -342,7 +348,7 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 						yfin=fin.getY();
 
 						bitmBoard = new Coord(dep.getX(),dep.getY());
-						yIncrBoard=20;
+						yIncrBoard=30;
 						fun_param=Coord.translate(dep, fin);
 						transRunningBoard=true;
 						Log.d("testapp" , "testf :" +fun_param +"/ dep: "+ dep + "fin : "+ fin);
@@ -350,15 +356,31 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 
 					}
 					else {
-						
-						if (Math.abs(bitmBoard.getY()-yfin) > 25) {
 
+						if (Math.abs(bitmBoard.getY()-yfin) > 25) {
+							if (Math.abs(bitmBoard.getY()-yfin) < 90) {
+
+							}
 							Log.d("testapp","situation : " + this.bitmBoard);
 
 							bitmBoard.setY((bitmBoard.getY()+yIncrBoard));
 
 							bitmBoard.setX(Coord.fun(fun_param.getX(), fun_param.getY(), bitmBoard.getY()));
 							canvas.drawBitmap(bitmap,bitmBoard.getX(),bitmBoard.getY(),paint1);
+
+							long stopTime = SystemClock.uptimeMillis();
+							try {
+								long howLongItTakesForUsToDoOurWork = stopTime - startTime;
+
+								long timeToWait = 4 - howLongItTakesForUsToDoOurWork;
+								if (timeToWait>1) {
+									this.gameThread.sleep(timeToWait);
+								}
+								//Log.d("testapp", "timetowait :" +timeToWait);
+							}
+							catch (Exception e) {
+
+							}
 							super.postInvalidate();
 						}
 						else {
@@ -393,23 +415,30 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 				canvas.drawBitmap(getBitmap(dh.getId()),dh.getX(),dh.getY(),paint1);
 
 			}
-			
+
 			//Drawing of computer's hand
-			for (Domino dc: app.getComputerHand()) {
-				
-				if (dc.getFather()==3 && transActivated) {
-					
+			
+			for (int z = 0; z<app.getComputerHand().size(); z++) { 
+				Domino dc = app.getComputerHand().get(z);
+				Log.d("testapp"," tt " + q);
+
+				if ((dc.getFather() != 3) || (! transActivated)) {
+					canvas.drawBitmap(getBitmap(99),dc.getX(),dc.getY(),paint1);
+				}
+				else {
 					if (!transRunningComputerHand) {
-						
+						q=z;
+
 						disable_button();
 						fin=dc.getCoord();
-						
+
 						dep=dc.getOriginCoord();
 						xfin=fin.getX();
 						yfin=fin.getY();
+						Log.d("testapp" , "dest :" +fin + " du "+ dc.getId() );
 
 						bitmHand = new Coord(dep.getX(),dep.getY());
-						yIncrHand=-10;
+						yIncrHand=-30;
 						fun_param=Coord.translate(dep, fin);
 						Log.d("testapp", "funparam : " + fun_param);
 						transRunningComputerHand=true;
@@ -417,37 +446,53 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 
 					}
 					else {
-						if (Math.abs(bitmHand.getY()-yfin) > 25) {
-							//Log.d("testapp","bitm : " + bitm);
-							Log.d("testapp", "debut : " + dep +" fin : " + fin);
+						if (q==z) {
+							if (Math.abs(bitmHand.getY()-yfin) > 25) {
 
 
 
-							bitmHand.setY((bitmHand.getY()+yIncrHand));
 
-							bitmHand.setX(Coord.fun(fun_param.getX(), fun_param.getY(), bitmHand.getY()));
-							canvas.drawBitmap(blankBitmap,bitmHand.getX(),bitmHand.getY(),paint1);
-							super.postInvalidate();
-						}
-						else {
-							dc.setFather(1);
-							transRunningComputerHand=false;
-							enable_button();
 
-							canvas.drawBitmap(blankBitmap,xfin,yfin,paint1);
-							super.postInvalidate();
+								bitmHand.setY((bitmHand.getY()+yIncrHand));
 
+								bitmHand.setX(Coord.fun(fun_param.getX(), fun_param.getY(), bitmHand.getY()));
+								canvas.drawBitmap(blankBitmap,bitmHand.getX(),bitmHand.getY(),paint1);
+
+								long stopTime = SystemClock.uptimeMillis();
+								try {
+									long howLongItTakesForUsToDoOurWork = stopTime - startTime;
+
+									long timeToWait = 10 - howLongItTakesForUsToDoOurWork;
+									//	Log.d("testapp", "time : " + howLongItTakesForUsToDoOurWork);
+									if ((timeToWait>1) && (timeToWait < 100)) {
+
+										this.gameThread.sleep(timeToWait);
+									}
+								}
+								catch (Exception e) {
+
+								}
+								super.postInvalidate();
+							}
+
+							else {
+								Log.d("testapp", "fin au :" + fin + " / " + yfin);
+								dc.setFather(1);
+								transRunningComputerHand=false;
+								enable_button();
+
+								canvas.drawBitmap(blankBitmap,xfin,yfin,paint1);
+								q=-1;
+								super.postInvalidate();
+
+							}
 						}
 					}
 				}
-				else {
-				
-				canvas.drawBitmap(getBitmap(99),dc.getX(),dc.getY(),paint1);
-				}
 			}
-			
-		}
+
 	}
+}
 
 
 	public Bitmap getBitmap(int id) {
