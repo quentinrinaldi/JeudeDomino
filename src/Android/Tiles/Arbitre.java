@@ -424,7 +424,7 @@ public class Arbitre {
 				d.setR(9);
 			}
 			else {
-				d.setFather(2);
+				//d.setFather(2);
 			}
 			(mains.get(i)).add(d);
 

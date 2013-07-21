@@ -56,6 +56,7 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 	private int color;
 	private boolean transRunningBoard;
 	private boolean transRunningComputerHand;
+	private boolean transRunningHumanHand;
 	private Coord dep,fin,fun_param,bitmBoard, bitmHand;
 	private float yIncrBoard;
 	private float yIncrHand;
@@ -64,7 +65,7 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 	private boolean state_exit;
 	private boolean state_newgame;
 	private boolean state_stock;
-	private boolean handMovingIsFinish = true;
+	
 	private int q= -1;
 
 	private boolean transActivated;
@@ -111,6 +112,7 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 		getAdjustedDimension(appContext);
 		transRunningBoard=false;
 		transRunningComputerHand=false;
+		transRunningHumanHand=false;
 		
 		Log.d("testapp","transmission des parametres");
 		this.app.setConfig((int)width, (int)height, this.longd, this.largd);
@@ -409,24 +411,25 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 
 			}
 
-			//Drawing of human's hand
+		/*	//Drawing of human's hand
 			for (int j=0;j<handPlayer.size();j++) {
 				Domino dh =handPlayer.get(j);
 				canvas.drawBitmap(getBitmap(dh.getId()),dh.getX(),dh.getY(),paint1);
 
 			}
-
-			//Drawing of computer's hand
+			*/
 			
-			for (int z = 0; z<app.getComputerHand().size(); z++) { 
-				Domino dc = app.getComputerHand().get(z);
-				Log.d("testapp"," tt " + q);
+			for (int z = 0; z<app.getHumanHand().size(); z++) { 
+				Domino dc = app.getHumanHand().get(z);
+				
 
 				if ((dc.getFather() != 3) || (! transActivated)) {
-					canvas.drawBitmap(getBitmap(99),dc.getX(),dc.getY(),paint1);
+					canvas.drawBitmap(getBitmap(dc.getId()),dc.getX(),dc.getY(),paint1);
 				}
-				else {
-					if (!transRunningComputerHand) {
+				else if (! transRunningComputerHand){
+					
+					if (!transRunningHumanHand) {
+						Log.d("testapp", "toto");
 						q=z;
 
 						disable_button();
@@ -438,9 +441,81 @@ public class TilesPlayerView extends SurfaceView implements SurfaceHolder.Callba
 						Log.d("testapp" , "dest :" +fin + " du "+ dc.getId() );
 
 						bitmHand = new Coord(dep.getX(),dep.getY());
-						yIncrHand=-30;
+						yIncrHand=+30;
 						fun_param=Coord.translate(dep, fin);
 						Log.d("testapp", "funparam : " + fun_param);
+						transRunningHumanHand=true;
+						super.postInvalidate();
+
+					}
+					else {
+						Log.d("testapp"," tt " + q);
+						if (q==z) {
+							if (Math.abs(bitmHand.getY()-yfin) > 25) {
+
+
+
+
+
+								bitmHand.setY((bitmHand.getY()+yIncrHand));
+
+								bitmHand.setX(Coord.fun(fun_param.getX(), fun_param.getY(), bitmHand.getY()));
+								canvas.drawBitmap(blankBitmap,bitmHand.getX(),bitmHand.getY(),paint1);
+
+								long stopTime = SystemClock.uptimeMillis();
+								try {
+									long howLongItTakesForUsToDoOurWork = stopTime - startTime;
+
+									long timeToWait = 10 - howLongItTakesForUsToDoOurWork;
+									//	Log.d("testapp", "time : " + howLongItTakesForUsToDoOurWork);
+									if ((timeToWait>1) && (timeToWait < 100)) {
+
+										this.gameThread.sleep(timeToWait);
+									}
+								}
+								catch (Exception e) {
+
+								}
+								super.postInvalidate();
+							}
+
+							else {
+								dc.setFather(1);
+								transRunningHumanHand=false;
+								enable_button();
+
+								canvas.drawBitmap(blankBitmap,xfin,yfin,paint1);
+								q=-1;
+								super.postInvalidate();
+
+							}
+						}
+					}
+				}
+			}
+
+			//Drawing of computer's hand
+			
+			for (int z = 0; z<app.getComputerHand().size(); z++) { 
+				Domino dc = app.getComputerHand().get(z);
+
+				if ((dc.getFather() != 3) || (! transActivated)) {
+					canvas.drawBitmap(getBitmap(99),dc.getX(),dc.getY(),paint1);
+				}
+				else if (! transRunningHumanHand) {
+					if (!transRunningComputerHand) {
+						q=z;
+
+						disable_button();
+						fin=dc.getCoord();
+
+						dep=dc.getOriginCoord();
+						xfin=fin.getX();
+						yfin=fin.getY();
+
+						bitmHand = new Coord(dep.getX(),dep.getY());
+						yIncrHand=-30;
+						fun_param=Coord.translate(dep, fin);
 						transRunningComputerHand=true;
 						super.postInvalidate();
 
